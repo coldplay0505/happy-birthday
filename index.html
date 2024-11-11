@@ -12,11 +12,22 @@
 </head>
 
 <body>
-  <!-- 嵌入背景音乐 -->
-  <div style="display: flex; justify-content: center; margin-top: 20px;">
-    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="200" height="80"
+  <!-- 点击按钮以播放音乐 -->
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="showMusicPlayer()">点击播放音乐</button>
+  </div>
+
+  <!-- 网易云音乐 iframe 隐藏，等待用户点击按钮 -->
+  <div id="musicContainer" style="display: none; text-align: center; margin-top: 10px;">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="80"
             src="//music.163.com/outchain/player?type=2&id=233947&auto=1&height=66"></iframe>
   </div>
+
+  <script>
+    function showMusicPlayer() {
+      document.getElementById('musicContainer').style.display = 'block';
+    }
+  </script>
 
   <div class="container">
     <div class="one">
