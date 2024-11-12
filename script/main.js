@@ -1,7 +1,3 @@
-import { inject } from '@vercel/analytics';
- 
-inject();
-
 // Import the data to customize and insert them into page
 const fetchData = () => {
   fetch("customize.json")
