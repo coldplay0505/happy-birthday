@@ -22,7 +22,7 @@
     <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/cn/album/%E6%88%91%E7%9A%84%E7%A7%98%E5%AF%86/666994246?i=666994935"></iframe>
   </div>
   -->
-  <audio autoplay loop>
+  <audio id="backgroundMusic" autoplay loop>
     <source src="secret.mp3" type="audio/mpeg">
   </audio>
 
@@ -159,4 +159,26 @@
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
+<script>
+  // 等待页面加载完毕
+  window.addEventListener('DOMContentLoaded', function() {
+    // 获取音乐和 greeting 元素
+    const audio = document.getElementById('backgroundMusic');
+    const greetingElement = document.getElementById('greeting');
+
+    // 使用 IntersectionObserver 观察 greeting 元素是否出现在视口中
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { // 当 greeting 出现时
+          audio.play(); // 播放音乐
+          //observer.unobserve(greetingElement); // 停止观察避免重复播放
+        }
+      });
+    }, { threshold: 1.0 }); // 设置阈值为 1.0，确保元素完全可见时才触发
+
+    // 开始观察 greeting 元素
+    observer.observe(greetingElement);
+  });
+</script>
 </html>
