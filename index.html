@@ -26,21 +26,24 @@
     <source src="secret-2.mp3" type="audio/mpeg">
   </audio>
 
-<!-- 页面加载遮罩层 -->
-<div id="loadingScreen" style="
-position: fixed;
-top: 0;
-left: 0;
-width: 100vw;
-height: 100vh;
-background-color: #ffffff;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 24px;
-z-index: 9999;">
-Loading...
+ <!-- 页面加载遮罩层 -->
+ <div id="loadingScreen" style="
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100vw;
+ height: 100vh;
+ background-color: #ffffff;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ font-size: 24px;
+ z-index: 9999;">
+ <button id="startButton" style="padding: 10px 20px; font-size: 18px;">
+   Click to Start
+ </button>
 </div>
+
 
   <!-- 主页面内容 -->
   <div id="mainContent" style="display: none;">
@@ -210,21 +213,29 @@ Loading...
 
 <script>
   window.addEventListener('DOMContentLoaded', function() {
-    // 获取音频和页面内容元素
+    // 获取音频、按钮和内容元素
     const audio = document.getElementById('backgroundMusic');
     const loadingScreen = document.getElementById('loadingScreen');
     const mainContent = document.getElementById('mainContent');
+    const startButton = document.getElementById('startButton');
 
-    // 监听音频加载完成事件
-    audio.addEventListener('canplaythrough', function() {
-      // 隐藏加载遮罩层并显示主页面内容
-      loadingScreen.style.display = 'none';
-      mainContent.style.display = 'block';
-      audio.play(); // 开始播放音频
+    // 用户点击按钮后播放音频并显示主页面内容
+    startButton.addEventListener('click', function() {
+      audio.play()  // 尝试播放音频
+        .then(() => {
+          // 隐藏加载遮罩层并显示主页面内容
+          loadingScreen.style.display = 'none';
+          mainContent.style.display = 'block';
+        })
+        .catch(error => {
+          console.error("音频播放失败：", error);
+          alert("音频播放失败，请检查您的浏览器设置。");
+        });
     });
     
-    // 为确保音频加载，主动加载音频
+    // 预加载音频
     audio.load();
   });
 </script>
+
 </html>
