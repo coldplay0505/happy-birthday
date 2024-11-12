@@ -26,6 +26,25 @@
     <source src="secret-2.mp3" type="audio/mpeg">
   </audio>
 
+<!-- 页面加载遮罩层 -->
+<div id="loadingScreen" style="
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: #ffffff;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 24px;
+z-index: 9999;">
+Loading...
+</div>
+
+  <!-- 主页面内容 -->
+  <div id="mainContent" style="display: none;">
+
   <div class="container">
     <div class="one">
       <h1 class="one">
@@ -151,6 +170,7 @@
       <p id="replay" data-node-name="replayText1">2024-11-12</p>
     </div>
   </div>
+  </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
@@ -188,4 +208,23 @@
   });
 </script>
 -->
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    // 获取音频和页面内容元素
+    const audio = document.getElementById('backgroundMusic');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainContent = document.getElementById('mainContent');
+
+    // 监听音频加载完成事件
+    audio.addEventListener('canplaythrough', function() {
+      // 隐藏加载遮罩层并显示主页面内容
+      loadingScreen.style.display = 'none';
+      mainContent.style.display = 'block';
+      audio.play(); // 开始播放音频
+    });
+    
+    // 为确保音频加载，主动加载音频
+    audio.load();
+  });
+</script>
 </html>
