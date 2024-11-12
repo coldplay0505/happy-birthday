@@ -29,7 +29,7 @@
   <div class="container">
     <div class="one">
       <h1 class="one">
-        <span data-node-name="greeting">Hey</span> 
+        <span id="greeting" data-node-name="greeting">Hey</span> 
         <br>
         <span data-node-name="name">Lydia</span>
       </h1>
@@ -167,18 +167,23 @@
     const audio = document.getElementById('backgroundMusic');
     const greetingElement = document.getElementById('greeting');
 
-    // 使用 IntersectionObserver 观察 greeting 元素是否出现在视口中
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { // 当 greeting 出现时
-          audio.play(); // 播放音乐
-          //observer.unobserve(greetingElement); // 停止观察避免重复播放
-        }
-      });
-    }, { threshold: 1.0 }); // 设置阈值为 1.0，确保元素完全可见时才触发
+    // 确保元素存在
+    if (greetingElement) {
+      // 使用 IntersectionObserver 观察 greeting 元素是否出现在视口中
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { // 当 greeting 出现时
+            audio.play(); // 播放音乐
+            // 不停止观察，保持播放
+          }
+        });
+      }, { threshold: 1.0 }); // 设置阈值为 1.0，确保元素完全可见时才触发
 
-    // 开始观察 greeting 元素
-    observer.observe(greetingElement);
+      // 开始观察 greeting 元素
+      observer.observe(greetingElement);
+    } else {
+      console.error("Element with ID 'greeting' not found.");
+    }
   });
 </script>
 </html>
